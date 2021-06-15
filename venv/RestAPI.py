@@ -10,6 +10,7 @@ userDB = sqlite3.connect('Users.db')
 cur = userDB.cursor()
 
 cur.execute('''CREATE TABLE IF NOT EXISTS users (id INTEGER, name TEXT)''')
+userDB.commit()
 
 
 #assign webpage (JSON server) to constant
@@ -23,11 +24,21 @@ print(Fore.GREEN , 'Status code:'+str(+response.status_code))
 print(Style.RESET_ALL)
 
 #creating example value to upload
-values ={'name': 'bob'}
+def user_data():
+    n = input('Please provied your name:')
+    return n
+
+values ={'name': user_data()}
 #assign POST request to constant
 post = requests.post(web+'/posts', data= values)
 #print POST request in text extension
 print(post.text)
+
+cur.execute('''INSERT INTO users (name) VALUES (?)''',user_data())
+userDB.commit()
+
+cur.execute('''SELECT * FROM users''')
+print(userDB.fetchall())
 
 
 #create new constant(dictionary) with new data to update existing file

@@ -1,5 +1,9 @@
 import requests
 web='http://localhost:3000'
 
-de= requests.delete(web+'/posts/2')
-de2= requests.delete(web+'/posts/3')
+
+def del_post():
+    a=input("Give post id to delete:")
+    requests.delete(web+'/posts/'+a)
+
+del_post()
