@@ -2,6 +2,7 @@ import requests
 import json
 import sqlite3
 from colorama import Fore, Back, Style
+from DbMod import insData,selData
 
 #create database for user
 userDB = sqlite3.connect('Users.db')
@@ -9,49 +10,48 @@ userDB = sqlite3.connect('Users.db')
 #set cursor
 cur = userDB.cursor()
 
-cur.execute('''CREATE TABLE IF NOT EXISTS users (id INTEGER, name TEXT)''')
-userDB.commit()
-
-
 #assign webpage (JSON server) to constant
 web='http://localhost:3000'
 
 #assign GET request to constant
 response = requests.get('http://localhost:3000')
 
-#print response with status code
-print(Fore.GREEN , 'Status code:'+str(+response.status_code))
-print(Style.RESET_ALL)
 
-#creating example value to upload
-def user_data():
-    n = input('Please provied your name:')
-    return n
 
-values ={'name': user_data()}
+#Insert data from user
+n,s = input('Please provied your data: ').split()
+
+def cr_user(n,s):
+    user={'name':n,'surname':s}
+    return user
+
+u=cr_user(n,s)
+
 #assign POST request to constant
-post = requests.post(web+'/posts', data= values)
+post = requests.post(web+'/posts', data= u)
+
+insData(n,s)
+
 #print POST request in text extension
 print(post.text)
+selData()
 
-cur.execute('''INSERT INTO users (name) VALUES (?)''',user_data())
-userDB.commit()
 
-cur.execute('''SELECT * FROM users''')
-print(userDB.fetchall())
+
+
 
 
 #create new constant(dictionary) with new data to update existing file
-change={'name':'John'}
+#change={'name':'John'}
 
 #assign PUT request to constant with extended webpage address
-put = requests.put(web+'/posts/3',data=change)
+#put = requests.put(web+'/posts/3',data=change)
 
 #print PUT request
-print(put.text)
-
-#assign GET request to new constant with updated data from webpage
-change_req = requests.get(web+'/posts/3')
-
-#print changes to earlier given post
-print(change_req.text)
+# print(put.text)
+#
+# #assign GET request to new constant with updated data from webpage
+# change_req = requests.get(web+'/posts/3')
+#
+# #print changes to earlier given post
+# print(change_req.text)
