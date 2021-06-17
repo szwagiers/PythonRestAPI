@@ -1,6 +1,6 @@
 import sqlite3
 
-#create database for user
+#create database for user/connect to databes
 userDB = sqlite3.connect('Users.db')
 
 #set cursor
@@ -8,14 +8,14 @@ cur = userDB.cursor()
 
 
 
-cur.execute('''CREATE TABLE IF NOT EXISTS users (name TEXT,surname TEXT)''')
+cur.execute('''CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY,name TEXT,surname TEXT)''')
 userDB.commit()
 
 #cur.execute(("SELECT * FROM {}").format(Tname))
 #userDB.commit()
 #cur.execute("SELECT name FROM sqlite_master WHERE type='table';")
 
-print(cur.fetchall())
+#print(cur.fetchall())
 
 
 def insData(name,surname):
@@ -25,7 +25,12 @@ def insData(name,surname):
 
 def selData():
     cur.execute('''SELECT * FROM users''')
-    print(cur.fetchall())
+    for row in cur:
+        print('id=', row[0])
+        print('name=', row[1])
+        print('surname=', row[2])
+
+#print(cur.fetchall())
 
 # cur.execute('''SELECT * FROM users''')
 # print(userDB.fetchall())

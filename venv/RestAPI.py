@@ -1,44 +1,24 @@
-import requests
-import json
-import sqlite3
+# import requests
+# import json
+# import sqlite3
 from colorama import Fore, Back, Style
-from DbMod import insData,selData
-
-#create database for user
-userDB = sqlite3.connect('Users.db')
-
-#set cursor
-cur = userDB.cursor()
+from DbMod import *
+from Req_Mod import *
+from UserMenuMod import *
 
 #assign webpage (JSON server) to constant
 web='http://localhost:3000'
 
-#assign GET request to constant
-response = requests.get('http://localhost:3000')
+ConCheck(web)
 
+#create database for user
+userDB = sqlite3.connect('Users.db')
+#set cursor
+cur = userDB.cursor()
 
+usrMenu()
 
-#Insert data from user
-n,s = input('Please provied your data: ').split()
-
-def cr_user(n,s):
-    user={'name':n,'surname':s}
-    return user
-
-u=cr_user(n,s)
-
-#assign POST request to constant
-post = requests.post(web+'/posts', data= u)
-
-insData(n,s)
-
-#print POST request in text extension
-print(post.text)
 selData()
-
-
-
-
 
 
 #create new constant(dictionary) with new data to update existing file
