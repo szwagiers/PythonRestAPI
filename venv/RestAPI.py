@@ -1,57 +1,37 @@
-import requests
-import json
-import sqlite3
+# import requests
+# import json
+# import sqlite3
 from colorama import Fore, Back, Style
-
-#create database for user
-userDB = sqlite3.connect('Users.db')
-
-#set cursor
-cur = userDB.cursor()
-
-cur.execute('''CREATE TABLE IF NOT EXISTS users (id INTEGER, name TEXT)''')
-userDB.commit()
-
+from DbMod import *
+from Req_Mod import *
+from UserMenuMod import *
 
 #assign webpage (JSON server) to constant
 web='http://localhost:3000'
 
-#assign GET request to constant
-response = requests.get('http://localhost:3000')
+ConCheck(web)
 
-#print response with status code
-print(Fore.GREEN , 'Status code:'+str(+response.status_code))
-print(Style.RESET_ALL)
+#create database for user
+userDB = sqlite3.connect('Users.db')
+#set cursor
+cur = userDB.cursor()
 
-#creating example value to upload
-def user_data():
-    n = input('Please provied your name:')
-    return n
+usrMenu()
 
-values ={'name': user_data()}
-#assign POST request to constant
-post = requests.post(web+'/posts', data= values)
-#print POST request in text extension
-print(post.text)
-
-cur.execute('''INSERT INTO users (name) VALUES (?)''',user_data())
-userDB.commit()
-
-cur.execute('''SELECT * FROM users''')
-print(userDB.fetchall())
+selData()
 
 
 #create new constant(dictionary) with new data to update existing file
-change={'name':'John'}
+#change={'name':'John'}
 
 #assign PUT request to constant with extended webpage address
-put = requests.put(web+'/posts/3',data=change)
+#put = requests.put(web+'/posts/3',data=change)
 
 #print PUT request
-print(put.text)
-
-#assign GET request to new constant with updated data from webpage
-change_req = requests.get(web+'/posts/3')
-
-#print changes to earlier given post
-print(change_req.text)
+# print(put.text)
+#
+# #assign GET request to new constant with updated data from webpage
+# change_req = requests.get(web+'/posts/3')
+#
+# #print changes to earlier given post
+# print(change_req.text)
