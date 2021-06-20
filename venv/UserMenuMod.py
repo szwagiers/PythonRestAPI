@@ -1,8 +1,10 @@
 from Req_Mod import *
 from DbMod import *
+from encyption import *
+
 #Create user data
-def cr_user(n,s):
-    user={'name':n,'surname':s}
+def cr_user(log,pswrd):
+    user={'Login':n,'passowrd':s}
     return user
 
 def usrMenu():
@@ -14,9 +16,12 @@ def usrMenu():
         Uans =input('Are You a new user or do You want to login? New/Login ').upper()
         if Uans == 'N':
             # Insert data from user
-            n, s = input('Please provide your data: ').split()
-            u = cr_user(n, s)
+            l, p = input('Please provide your login and password (separete with space): ').split()
+            encrypt(p)
+            u = cr_user(l, p)
             addUser(u)
+        elif Uand =='L':
+            log,pswrd = input('Please provide Your login and password. ')
 
         else:
             pass

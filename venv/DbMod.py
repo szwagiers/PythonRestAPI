@@ -7,8 +7,7 @@ userDB = sqlite3.connect('Users.db')
 cur = userDB.cursor()
 
 
-
-cur.execute('''CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY,name TEXT,surname TEXT)''')
+cur.execute('''CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY,login UNIQUE TEXT,password TEXT)''')
 userDB.commit()
 
 #cur.execute(("SELECT * FROM {}").format(Tname))
@@ -18,8 +17,8 @@ userDB.commit()
 #print(cur.fetchall())
 
 
-def insData(name,surname):
-    cur.execute('''INSERT INTO users(name,surname) VALUES ('{}','{}')'''.format(name,surname))
+def insData(log,pswrd):
+    cur.execute('''INSERT INTO users(Login,Password) VALUES ('{}','{}')'''.format(log,pswrd))
     userDB.commit()
 
 
