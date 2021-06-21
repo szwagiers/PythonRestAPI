@@ -4,7 +4,7 @@ from encyption import *
 
 #Create user data
 def cr_user(log,pswrd):
-    user={'Login':n,'passowrd':s}
+    user={'Login':log,'passowrd':pswrd}
     return user
 
 def usrMenu():
@@ -20,10 +20,12 @@ def usrMenu():
             encrypt(p)
             u = cr_user(l, p)
             addUser(u)
-        elif Uand =='L':
-            log,pswrd = input('Please provide Your login and password. ')
-
+            insData(l,p)
+        elif Uans =='L':
+            log,pswrd = input('Please provide Your login and password. ').split()
+            checkLogIn(log,pswrd)
         else:
             pass
     else:
         pass
+    usrMenu()
