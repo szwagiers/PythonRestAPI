@@ -18,7 +18,7 @@ cur = userDB.cursor()
 
 usrMenu()
 
-selData()
+selUsrData()
 
 
 #create new constant(dictionary) with new data to update existing file

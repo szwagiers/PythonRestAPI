@@ -25,6 +25,6 @@ def del_post(w):
 
 def addUser(usrD):
     # assign POST request to constant
-    post = requests.post(web + '/posts', data=usrD)
+    prof = requests.post(web + '/profile', data=usrD)
     # print POST request in text extension
-    print(post.text)
+    print(prof.text)
