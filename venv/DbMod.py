@@ -9,7 +9,7 @@ userDB = sqlite3.connect('Users.db')
 cur = userDB.cursor()
 
 #create table for users data
-cur.execute('''CREATE TABLE IF NOT EXISTS users (id ,login TEXT UNIQUE ,password TEXT)''')
+cur.execute('''CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,login TEXT UNIQUE ,password TEXT)''')
 userDB.commit()
 
 
@@ -25,10 +25,12 @@ def insData(log,pswrd):
     userDB.commit()
 
 
-def selUsrData(q):
-    cur.execute('''{}'''.format(q))
-    print(cur.fetchall())
-    for row in cur:
+def selUsrData():
+    cur.execute('''SELECT * FROM users ''')
+    table = cur.fetchall()
+    # print(table)
+    for row in table:
+        # print(row)
         print('id=', row[0],'login=', row[1],'password=', row[2])
         # print('login=', row[1])
         # print('password=', row[2])
@@ -37,9 +39,9 @@ def selUsrData(q):
 def checkLogIn(log,pswrd):
     cur.execute('''SELECT *  FROM users''')
     userDB.commit()
-    check=cur.fetchone()
-    if log in check and pswrd in check:
-    # if log==dbLog and pswrd==dePsw:
+    check=cur.fetchall()
+    if check:
+        # if log==dbLog and pswrd==dePsw:
         print(Fore.GREEN,'Logged in successfully')
         print(Style.RESET_ALL)
 

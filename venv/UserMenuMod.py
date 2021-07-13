@@ -16,11 +16,8 @@ def usrMenu(web):
 
         Ops=input('Options: (I)nsertData,(S)electData ').upper()
         if Ops == 'S':
-            Query=input('Please insert query ')
-            try:
-                selUsrData(Query)
-            except SyntaxError:
-                print('Please check your query')
+            selUsrData()
+
 
     elif ans == 'U':
         Uans =input('Are you a new user or do you want to login? New/Login ').upper()
