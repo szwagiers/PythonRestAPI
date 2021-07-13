@@ -1,19 +1,17 @@
 import sqlite3
-from encyption import *
+from encryption import *
 from colorama import Fore, Back, Style
 
-#create database for user/connect to databes
+#create database for user/connect to databese
 userDB = sqlite3.connect('Users.db')
 
 #set cursor
 cur = userDB.cursor()
 
 #create table for users data
-cur.execute('''CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY,login TEXT UNIQUE ,password TEXT)''')
+cur.execute('''CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,login TEXT UNIQUE ,password TEXT)''')
 userDB.commit()
-#create table for storing password data
-cur.execute('''CREATE TABLE IF NOT EXISTS pswrds (id INTEGER PRIMARY KEY,keyVal text,FOREIGN KEY (id) REFERENCES users(id))''')
-userDB.commit()
+
 
 #cur.execute(("SELECT * FROM {}").format(Tname))
 #userDB.commit()
@@ -23,29 +21,30 @@ userDB.commit()
 
 
 def insData(log,pswrd):
-    k,p= encrypt(pswrd)
-    cur.execute('''INSERT INTO users(login,password) VALUES ({},{})'''.format(log,p))
+    cur.execute('''INSERT INTO users(login,password) VALUES ('{}','{}')'''.format(log,pswrd))
     userDB.commit()
-    cur.execute('''INSERT INTO pswrds(keyVal) VALUES({})'''.format(str(k)))
 
 
 def selUsrData():
-    cur.execute('''SELECT * FROM users''')
-    for row in cur:
-        print('id=', row[0])
-        print('login=', row[1])
-        print('password=', row[2])
+    cur.execute('''SELECT * FROM users ''')
+    table = cur.fetchall()
+    # print(table)
+    for row in table:
+        # print(row)
+        print('id=', row[0],'login=', row[1],'password=', row[2])
+        # print('login=', row[1])
+        # print('password=', row[2])
 
 
 def checkLogIn(log,pswrd):
-    cur.execute('''SELECT u.id,login,password,keyVal  FROM users as u JOIN pswrds as p on u.id=p.id ''')
+    cur.execute('''SELECT *  FROM users''')
     userDB.commit()
     check=cur.fetchall()
-    c_suite = Fernet(check[3])
-    dePsw=c_suite.decrypt(check[2])
-    dbLog=check[1]
-    if log==dbLog and pswrd==dePsw:
-        print(Fore.GREEN,'Logged succesfully')
+    if check:
+        # if log==dbLog and pswrd==dePsw:
+        print(Fore.GREEN,'Logged in successfully')
+        print(Style.RESET_ALL)
 
 # cur.execute('''SELECT * FROM users''')
 # print(userDB.fetchall())
+

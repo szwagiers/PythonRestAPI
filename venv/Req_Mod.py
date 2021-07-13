@@ -6,8 +6,13 @@ web='http://localhost:3000'
 #print response with status code
 def ConCheck(w):
     response = requests.get(w)
-    print(Fore.GREEN, 'Status code:' + str(+response.status_code))
-    print(Style.RESET_ALL)
+    if response.status_code == 200 :
+        print(Fore.GREEN, 'Status code:' + str(response.status_code))
+        print(Style.RESET_ALL)
+    else:
+        print(Fore.RED, 'Status code:' + str(+response.status_code))
+        print(Style.RESET_ALL)
+
 
 def del_post(w):
     delQ=input('Do You want to delete single or multiple posts? Select s or m ')
@@ -23,8 +28,9 @@ def del_post(w):
         del_post(w)
 
 
-def addUser(usrD):
+def addUser(web,usrD):
     # assign POST request to constant
-    prof = requests.post(web + '/profile', data=usrD)
+    UProfile = requests.post(web + '/profile', data=usrD)
     # print POST request in text extension
-    print(prof.text)
+    print(UProfile.text)
+

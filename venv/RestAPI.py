@@ -1,6 +1,4 @@
-# import requests
-# import json
-# import sqlite3
+
 from colorama import Fore, Back, Style
 from DbMod import *
 from Req_Mod import *
@@ -8,7 +6,7 @@ from UserMenuMod import *
 
 #assign webpage (JSON server) to constant
 web='http://localhost:3000'
-
+#checking connection to json server
 ConCheck(web)
 
 #create database for user
@@ -16,7 +14,7 @@ userDB = sqlite3.connect('Users.db')
 #set cursor
 cur = userDB.cursor()
 
-usrMenu()
+usrMenu(web)
 
 selUsrData()
 
